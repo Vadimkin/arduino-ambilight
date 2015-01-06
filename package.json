@@ -1,0 +1,28 @@
+{
+  "name": "arduino-ambilight",
+  "description": "App, that contol LED depending on the color at display",
+  "version": "0.0.1",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [
+    "arduino",
+    "led",
+    "ambilight"
+  ],
+  "author": {
+    "name": "Vadim Klimenko"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Vadimkin/arduino-ambilight.git"
+  },
+  "bugs": "http://github.com/Vadimkin/arduino-ambilight/issues",
+  "license": "CC-BY-SA",
+  "dependencies": {
+    "firmata": "^0.3.6",
+    "pngjs": "^0.4.0",
+    "johnny-five": "^0.8.37",
+    "es6-shim": "^0.22.2"
+  }
+}
