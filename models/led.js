@@ -37,32 +37,34 @@ LED.prototype.updateColors = function(data, width, height){
 		}
 	}
 
-	// this.oldColors['r'] = 0;
-	// this.oldColors['g'] = 0;
-	// this.oldColors['b'] = 0;
+	stepR = (this.oldColors['r'] - this.currentColors['r']) / 101;
+	stepG = (this.oldColors['g'] - this.currentColors['g']) / 101;
+	stepB = (this.oldColors['b'] - this.currentColors['b']) / 101;
 
-	// this.currentColors['r'] = 255;
-	// this.currentColors['g'] = 255;
-	// this.currentColors['b'] = 255;
-
-	stepR = (this.oldColors['r'] - this.currentColors['r']) / 100;
-	stepG = (this.oldColors['g'] - this.currentColors['g']) / 100;
-	stepB = (this.oldColors['b'] - this.currentColors['b']) / 100;
 
 	for(var i = 0; i <= 100; i++) {
 		var led = this;
 		(function(i) {
 			setTimeout(function() {
-				led.draw(led.pins[0], led.oldColors['r'] - stepR * i);
-				led.draw(led.pins[1], led.oldColors['g'] - stepG * i);
-				led.draw(led.pins[2], led.oldColors['b'] - stepB * i);
+				r = (led.oldColors['r'] - stepR * i).toFixed(0);
+				g = (led.oldColors['g'] - stepG * i).toFixed(0);
+				b = (led.oldColors['b'] - stepB * i).toFixed(0);
+				led.pins.color(led.rgbToHex(r, g, b));
 			}, i * 10);
 		})(i);
 	}
 }
 
-LED.prototype.draw = function(pin, value) {
-	this.five.Led(pin).brightness(value);
+LED.prototype.rgbToHex = function(r, g, b) {
+    return this.toHex(r)+this.toHex(g)+this.toHex(b);
+}
+
+LED.prototype.toHex = function(n) {
+	n = parseInt(n,10);
+	if (isNaN(n)) return "00";
+	n = Math.max(0,Math.min(n,255));
+	return "0123456789ABCDEF".charAt((n-n%16)/16)
+	  + "0123456789ABCDEF".charAt(n%16);
 }
 
 module.exports = LED;

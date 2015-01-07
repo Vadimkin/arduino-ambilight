@@ -8,24 +8,24 @@ var filePath = fs.realpathSync(__dirname);
 
 board = new five.Board();
 
-diode = new LED(five, [5, 7, 6], 1);
-diode2 = new LED(five, [10, 9, 8], 2);
-
-
 
 board.on("ready", function() {
+
+	diode = new LED(five, five.Led.RGB([5, 7, 6]), 1);
+	diode2 = new LED(five, five.Led.RGB([10, 9, 8]), 2);
+
 	setInterval(function() {
-	     exec('screencapture -x screen.jpg', function (error, stdout, stderr) {
+	    exec('screencapture -x screen.jpg', function (error, stdout, stderr) {
 
 		fs.createReadStream(filePath + '/screen.jpg')
 			.pipe(new PNG({
 			  filterType: 4
 			}))
 			.on('parsed', function() {
-				diode.updateColors(this.data, this.width, this.height);
 				diode2.updateColors(this.data, this.width, this.height);
+				diode.updateColors(this.data, this.width, this.height);
 			})
 
-	     });
-	}, 10000);
+	    });
+	}, 2000);
 });
